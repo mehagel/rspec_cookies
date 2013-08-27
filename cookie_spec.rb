@@ -24,12 +24,13 @@ describe Cookie do
   describe "#type" do
     it "returns the type of the cookie" do
       cookie.type.should eq 'peanut butter'
+      expect(cookie.type).to eq 'peanut butter'
     end
   end
 
   describe "#bake!" do
     it "requires an integer time argument" do
-      expect {cookie.bake!()}.to raise_error(ArgumentError)
+      expect {cookie.bake!}.to raise_error(ArgumentError)
     end
 
     it "returns the cookie object" do
@@ -47,7 +48,7 @@ describe Cookie do
     it "changes the status of the cookie when given enough time" do
       expect { cookie.bake!(12) }.to change(cookie, :status)
     end
-s
+
     it "changes the status of the cookie when given enough time" do
       expect { cookie.bake!(13) }.to change(cookie, :status)
     end
@@ -71,7 +72,7 @@ s
 
     context "when baked for at least 7 but less than 10 minutes" do
       (7..9).to_a.each do |time|
-        it 'returns almost_ready if time is #{time}' do
+        it "returns almost_ready if time is #{time}" do
         cookie.bake!(time)
         cookie.status.should eq :almost_ready
         end
@@ -80,23 +81,16 @@ s
 
     context "when baked for at least 7 but less than 10 minutes" do
       (7..9).to_a.sample do |time|
-        it 'returns almost_ready if time is #{time}' do
+        it "returns almost_ready if time is #{time}" do
         cookie.bake!(time)
         cookie.status.should eq :almost_ready
         end
       end
     end
 
-    context "when baked for at least 7 but less than 10 minutes" do
-        it 'returns almost_ready if time is between 7..9' do
-        cookie.bake!(rand(7..9))
-        cookie.status.should eq :almost_ready
-      end
-    end
-
     context "when baked for at least 10 but less than 12 minutes" do
         (10..11).to_a.each do |time|
-      it 'returns ready if the time is #{time}' do
+      it "returns ready if the time is #{time}" do
         cookie.bake!(time)
         cookie.status.should eq :ready
         end
@@ -104,7 +98,11 @@ s
     end
 
     context "when baked for at least 12 minutes" do
-      it "is `:burned`"
+        time = rand(12..1000)
+      it "returns burned if the time is #{time}" do
+        cookie.bake!(time)
+        cookie.status.should eq :burned
+      end
     end
   end
 end
